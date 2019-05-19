@@ -1,4 +1,4 @@
-package com.github.mktdo.queue
+package com.github.mktdo.queue.scala
 
 import org.scalatest._
 

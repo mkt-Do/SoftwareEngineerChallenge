@@ -1,4 +1,4 @@
-package com.github.mktdo.queue
+package com.github.mktdo.queue.scala
 
 trait Queue[T] {
   def isEmpty: Boolean

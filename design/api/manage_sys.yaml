@@ -1,0 +1,718 @@
+openapi: "3.0.2"
+info:
+  description: "Management System for Google Analytics like Service API References"
+  version: "0.1"
+  title: "Management System for Google Analytics like Service API References"
+paths:
+  /users/create:
+    post:
+      tags:
+        - "Users API"
+      summary: "API to create user"
+      description: "Create user to use this system for management"
+      parameters: []
+      requestBody:
+        description: "Create User"
+        content:
+          application/json:
+            schema:
+              type: "object"
+              properties:
+                username:
+                  type: "string"
+                  example: "Hoge Fuga"
+                email:
+                  type: "string"
+                  example: "hogefuga@piyo.com"
+                password:
+                  type: "string"
+                  example: "hogefugapiyo"
+                "organ_id":
+                  type: "integer"
+                  format: "int64"
+                  example: 1
+      responses:
+        200:
+          description: "Success create user"
+  /users/{userId}:
+    get:
+      tags:
+        - "Users API"
+      summary: "API to get user info"
+      description: "Get user information"
+      parameters:
+        - name: "userId"
+          in: "path"
+          description: "user ID you want to know"
+          required: true
+          schema:
+            type: "integer"
+      responses:
+        200:
+          description: "Success get user information"
+          content:
+            application/json:
+              schema:
+                type: "object"
+                properties:
+                  user_id:
+                    type: "integer"
+                    format: "int64"
+                    example: 1
+                  username:
+                    type: "string"
+                    example: "Hoge Fuga"
+                  email:
+                    type: "string"
+                    example: "hogefuga@piyo.com"
+                  role:
+                    type: "integer"
+                    format: "int8"
+                    example: 1
+                  organ_id:
+                    type: "integer"
+                    format: "int64"
+                    example: 1
+  /organ/create:
+    post:
+      tags:
+        - "Organization API"
+      summary: "API to create organization"
+      description: "Create organization"
+      parameters: []
+      requestBody:
+        description: "Create organization"
+        content:
+          application/json:
+            schema:
+              type: "object"
+              properties:
+                organ_name:
+                  type: "string"
+                  example: "Foo.inc"
+                president_name:
+                  type: "string"
+                  example: "Foo Bar"
+                president_email:
+                  type: "string"
+                  example: "foo.bar@foo.com"
+      responses:
+        200:
+          description: "Success create organization"
+  /organ/{organId}:
+    get:
+      tags:
+        - "Organization API"
+      summary: "API to get organization information"
+      description: "Get organization Information"
+      parameters:
+        - name: "organId"
+          in: "path"
+          description: "organization ID you want to know"
+          required: true
+          schema:
+            type: "integer"
+      responses:
+        200:
+          description: "Success get organization information"
+          content:
+            application/json:
+              schema:
+                type: "object"
+                properties:
+                  organ_id:
+                    type: "integer"
+                    format: "int64"
+                    example: 1
+                  organ_name:
+                    type: "string"
+                    example: "Foo.inc"
+                  president_name:
+                    type: "string"
+                    example: "Foo Bar"
+                  president_email:
+                    type: "string"
+                    example: "foo.bar@foo.com"
+  /analyses/create:
+    post:
+      tags:
+        - "Manage Analyze Tag API"
+      summary: "API to create analysis tag"
+      description: "create analysis tag"
+      parameters: []
+      requestBody:
+        description: "Create Analysis Tag"
+        content:
+          application/json:
+            schema:
+              type: "object"
+              properties:
+                organ_id:
+                  type: "integer"
+                  format: "int64"
+                  example: 1
+                user_id:
+                  type: "integer"
+                  format: "int64"
+                  exaple: 1
+                tag_type:
+                  type: "integer"
+                  format: "int8"
+                  example: 1
+        responses:
+          200:
+            description: "Success create analysis tag"
+  /analyses/{analysisId}:
+    get:
+      tags:
+        - "Manage Analyze Tag API"
+      summary: "API to get analysis tag"
+      description: "get analysis tag"
+      parameters:
+        - name: "analysisId"
+          in: "path"
+          description: "analysis tag ID you want to know"
+          required: true
+          schema:
+            type: "integer"
+      responses:
+        200:
+          description: "Success get analysis tag information"
+          content:
+            application/json:
+              schema:
+                type: "object"
+                properties:
+                  analysis_tag_id:
+                    type: "integer"
+                    format: "int64"
+                    example: 1
+                  analysis_tag:
+                    type: "string"
+                    example: "<script>...</script>"
+                  expiration:
+                    type: "string"
+                    example: "2019-01-02 03:45 GMT+0900"
+  /analyses/organs/{organId}/list:
+    get:
+      tags:
+        - "Manage Analyze Tag API"
+      summary: "API to get analysis tags"
+      description: "get analysis tags"
+      parameters:
+        - name: "organId"
+          in: "path"
+          description: "organ ID you want to get organization having analysis tags"
+          required: true
+          schema:
+            type: "integer"
+      responses:
+        200:
+          description: "Success get analysis tags"
+          content:
+            application/json:
+              schema:
+                type: "array"
+                items:
+                  type: "object"
+                  properties:
+                    analysis_tag_id:
+                      type: "integer"
+                      format: "int64"
+                      example: 1
+                    analysis_tag:
+                      type: "string"
+                      example: "<script>...</script>"
+                    expiration:
+                      type: "string"
+                      example: "2019-01-02 03:45 GMT+0900"
+  /analyses/{analysisId}/refresh:
+    patch:
+      tags:
+        - "Manage Analyze Tag API"
+      summary: "API to refresh expiration for analysis tag"
+      description: "refresh expiration for analysis tag"
+      parameters:
+        - name: "analysisId"
+          in: "path"
+          description: "analysis ID you want to refresh expriration"
+          required: true
+          schema:
+            type: "integer"
+      responses:
+        200:
+          description: "Success update analysis tag expiration"
+  /reports/organs/{organId}/users/summary:
+    get:
+      tags:
+        - "Report API"
+      summary: "fetch user summary reports for organization"
+      description: "Fetch user summary reports for organization"
+      parameters:
+        - name: "organId"
+          in: "path"
+          description: "organization ID you want to fetch report"
+          required: true
+          schema:
+            type: "integer"
+        - name: "month"
+          in: "query"
+          description: "month you want to fetch report (default this month)"
+          required: false
+          default: "this month"
+          schema:
+            type: "integer"
+      responses:
+        200:
+          description: "Success fetch organization summary reports"
+          content:
+            application/json:
+              schema:
+                type: "object"
+                properties:
+                  sessions:
+                    type: "integer"
+                    format: "int64"
+                    example: 1
+                  users:
+                    type: "integer"
+                    format: "int64"
+                    example: 2
+                  views:
+                    type: "integer"
+                    format: "int64"
+                    example: 3
+                  page_sessions:
+                    type: "integer"
+                    format: "int64"
+                    example: 4
+                  avg_session_time:
+                    type: "number"
+                    format: "double"
+                    example: 5.6
+                  bounce_rate:
+                    type: "number"
+                    format: "double"
+                    example: 7.8
+                  new_session_rate:
+                    type: "number"
+                    format: "double"
+                    example: 9.0
+  /reports/organs/{organId}/users/daily:
+    get:
+      tags:
+        - "Report API"
+      summary: "fetch user daily reports for organization"
+      description: "Fetch user daily reports for organization"
+      parameters:
+        - name: "organId"
+          in: "path"
+          description: "organization ID you want to fetch report"
+          required: true
+          schema:
+            type: "integer"
+        - name: "range"
+          in: "query"
+          description: "fetch range you want to fetch report (default 7 days)"
+          required: false
+          default: 7
+          schema:
+            type: "integer"
+      responses:
+        200:
+          description: "Success fetch organization summary reports"
+          content:
+            application/json:
+              schema:
+                type: "array"
+                items:
+                  type: "object"
+                  properties:
+                    date:
+                      type: "string"
+                      example: "2019-01-23 04:05 GMT+0900"
+                    sessions:
+                      type: "integer"
+                      format: "int64"
+                      example: 1
+                    users:
+                      type: "integer"
+                      format: "int64"
+                      example: 2
+                    views:
+                      type: "integer"
+                      format: "int64"
+                      example: 3
+                    page_sessions:
+                      type: "integer"
+                      format: "int64"
+                      example: 4
+                    avg_session_time:
+                      type: "number"
+                      format: "double"
+                      example: 5.6
+                    bounce_rate:
+                      type: "number"
+                      format: "double"
+                      example: 7.8
+                    new_session_rate:
+                      type: "number"
+                      format: "double"
+                      example: 9.0
+  /reports/organs/{organId}/users/hourly:
+    get:
+      tags:
+        - "Report API"
+      summary: "fetch user hourly reports for organization"
+      description: "Fetch user hourly reports for organization"
+      parameters:
+        - name: "organId"
+          in: "path"
+          description: "organization ID you want to fetch report"
+          required: true
+          schema:
+            type: "integer"
+        - name: "range"
+          in: "query"
+          description: "fetch range you want to fetch report (default 3 hours)"
+          required: false
+          default: 3
+          schema:
+            type: "integer"
+      responses:
+        200:
+          description: "Success fetch organization summary reports"
+          content:
+            application/json:
+              schema:
+                type: "array"
+                items:
+                  type: "object"
+                  properties:
+                    datetime:
+                      type: "string"
+                      example: "2019-01-23 04:05 GMT+0900"
+                    sessions:
+                      type: "integer"
+                      format: "int64"
+                      example: 1
+                    users:
+                      type: "integer"
+                      format: "int64"
+                      example: 2
+                    views:
+                      type: "integer"
+                      format: "int64"
+                      example: 3
+                    page_sessions:
+                      type: "integer"
+                      format: "int64"
+                      example: 4
+                    avg_session_time:
+                      type: "number"
+                      format: "double"
+                      example: 5.6
+                    bounce_rate:
+                      type: "number"
+                      format: "double"
+                      example: 7.8
+                    new_session_rate:
+                      type: "number"
+                      format: "double"
+                      example: 9.0
+  /reports/organs/{organId}/behaviors/summary:
+    get:
+      tags:
+        - "Report API"
+      summary: "fetch behaviors summary reports for organization"
+      description: "Fetch behaviors summary reports for organization"
+      parameters:
+        - name: "organId"
+          in: "path"
+          description: "organization ID you want to fetch report"
+          required: true
+          schema:
+            type: "integer"
+        - name: "month"
+          in: "query"
+          description: "month you want to fetch report (default this month)"
+          required: false
+          default: "this month"
+          schema:
+            type: "integer"
+      responses:
+        200:
+          description: "Success fetch organization summary reports"
+          content:
+            application/json:
+              schema:
+                type: "object"
+                properties:
+                  views:
+                    type: "integer"
+                    format: "int64"
+                    example: 1
+                  ave_page_time:
+                    type: "number"
+                    format: "double"
+                    example: 2.3
+                  starts:
+                    type: "integer"
+                    format: "int64"
+                    example: 4
+                  bounce_rate:
+                    type: "number"
+                    format: "double"
+                    example: 5.6
+                  exit_rate:
+                    type: "number"
+                    format: "double"
+                    example: 7.8
+                  values:
+                    type: "number"
+                    format: "double"
+                    example: 9.0
+  /reports/organs/{organId}/behaviors/daily:
+    get:
+      tags:
+        - "Report API"
+      summary: "fetch behaviors daily reports for organization"
+      description: "Fetch behaviors daily reports for organization"
+      parameters:
+        - name: "organId"
+          in: "path"
+          description: "organization ID you want to fetch report"
+          required: true
+          schema:
+            type: "integer"
+        - name: "range"
+          in: "query"
+          description: "fetch reports range you want to fetch report (default 7 days)"
+          required: false
+          default: 7
+          schema:
+            type: "integer"
+      responses:
+        200:
+          description: "Success fetch organization summary reports"
+          content:
+            application/json:
+              schema:
+                type: "array"
+                items:
+                  type: "object"
+                  properties:
+                    views:
+                      type: "integer"
+                      format: "int64"
+                      example: 1
+                    ave_page_time:
+                      type: "number"
+                      format: "double"
+                      example: 2.3
+                    starts:
+                      type: "integer"
+                      format: "int64"
+                      example: 4
+                    bounce_rate:
+                      type: "number"
+                      format: "double"
+                      example: 5.6
+                    exit_rate:
+                      type: "number"
+                      format: "double"
+                      example: 7.8
+                    values:
+                      type: "number"
+                      format: "double"
+                      example: 9.0
+  /reports/organs/{organId}/behaviors/hourly:
+    get:
+      tags:
+        - "Report API"
+      summary: "fetch behaviors hourly reports for organization"
+      description: "Fetch behaviors hourly reports for organization"
+      parameters:
+        - name: "organId"
+          in: "path"
+          description: "organization ID you want to fetch report"
+          required: true
+          schema:
+            type: "integer"
+        - name: "range"
+          in: "query"
+          description: "fetch reports range you want to fetch report (default 3 hours)"
+          required: false
+          default: 3
+          schema:
+            type: "integer"
+      responses:
+        200:
+          description: "Success fetch organization summary reports"
+          content:
+            application/json:
+              schema:
+                type: "array"
+                items:
+                  type: "object"
+                  properties:
+                    views:
+                      type: "integer"
+                      format: "int64"
+                      example: 1
+                    ave_page_time:
+                      type: "number"
+                      format: "double"
+                      example: 2.3
+                    starts:
+                      type: "integer"
+                      format: "int64"
+                      example: 4
+                    bounce_rate:
+                      type: "number"
+                      format: "double"
+                      example: 5.6
+                    exit_rate:
+                      type: "number"
+                      format: "double"
+                      example: 7.8
+                    values:
+                      type: "number"
+                      format: "double"
+                      example: 9.0
+  /reports/organs/{organId}/conversions/summary:
+    get:
+      tags:
+        - "Report API"
+      summary: "fetch conversions summary reports for organization"
+      description: "Fetch conversions summary reports for organization"
+      parameters:
+        - name: "organId"
+          in: "path"
+          description: "organization ID you want to fetch report"
+          required: true
+          schema:
+            type: "integer"
+        - name: "month"
+          in: "query"
+          description: "month you want to fetch report (default this month)"
+          required: false
+          default: "this month"
+          schema:
+            type: "integer"
+      responses:
+        200:
+          description: "Success fetch organization summary reports"
+          content:
+            application/json:
+              schema:
+                type: "object"
+                properties:
+                  convesions:
+                    type: "integer"
+                    format: "int64"
+                    example: 1
+                  goals:
+                    type: "integer"
+                    format: "int64"
+                    example: 2
+                  conversion_rate:
+                    type: "number"
+                    format: "double"
+                    example: 3.4
+                  abandonment_rate:
+                    type: "number"
+                    format: "double"
+                    example: 5.6
+  /reports/organs/{organId}/conversions/daily:
+    get:
+      tags:
+        - "Report API"
+      summary: "fetch conversions daily reports for organization"
+      description: "Fetch conversions daily reports for organization"
+      parameters:
+        - name: "organId"
+          in: "path"
+          description: "organization ID you want to fetch report"
+          required: true
+          schema:
+            type: "integer"
+        - name: "range"
+          in: "query"
+          description: "fetch reports range you want to fetch report (default 7 days)"
+          required: false
+          default: 7
+          schema:
+            type: "integer"
+      responses:
+        200:
+          description: "Success fetch organization summary reports"
+          content:
+            application/json:
+              schema:
+                type: "array"
+                items:
+                  type: "object"
+                  properties:
+                    convesions:
+                      type: "integer"
+                      format: "int64"
+                      example: 1
+                    goals:
+                      type: "integer"
+                      format: "int64"
+                      example: 2
+                    conversion_rate:
+                      type: "number"
+                      format: "double"
+                      example: 3.4
+                    abandonment_rate:
+                      type: "number"
+                      format: "double"
+                      example: 5.6
+  /reports/organs/{organId}/conversions/hourly:
+    get:
+      tags:
+        - "Report API"
+      summary: "fetch conversions hourly reports for organization"
+      description: "Fetch conversions hourly reports for organization"
+      parameters:
+        - name: "organId"
+          in: "path"
+          description: "organization ID you want to fetch report"
+          required: true
+          schema:
+            type: "integer"
+        - name: "range"
+          in: "query"
+          description: "fetch reports range you want to fetch report (default 3 hours)"
+          required: false
+          default: 3
+          schema:
+            type: "integer"
+      responses:
+        200:
+          description: "Success fetch organization summary reports"
+          content:
+            application/json:
+              schema:
+                type: "array"
+                items:
+                  type: "object"
+                  properties:
+                    convesions:
+                      type: "integer"
+                      format: "int64"
+                      example: 1
+                    goals:
+                      type: "integer"
+                      format: "int64"
+                      example: 2
+                    conversion_rate:
+                      type: "number"
+                      format: "double"
+                      example: 3.4
+                    abandonment_rate:
+                      type: "number"
+                      format: "double"
+                      example: 5.6

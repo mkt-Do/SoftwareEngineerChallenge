@@ -1,0 +1,76 @@
+openapi: "3.0.2"
+info:
+  description: "Endpoint for measurement"
+  version: "0.1"
+  title: "Endpoint for measurement"
+paths:
+  /session:
+    get:
+      tags:
+        - "Measure API"
+      summary: "API to create session"
+      responses:
+        200:
+          description: "Success create session"
+          content:
+            application/json:
+              schema:
+                type: "object"
+                properties:
+                  session_id:
+                    type: "string"
+                    example: "XXXXXXXXXXXXXX"
+                  expiration:
+                    type: "integer"
+                    format: "int64"
+                    example: 10000
+  /user:
+    get:
+      tags:
+        - "Measure API"
+      summary: "API to create user for analysis"
+      responses:
+        200:
+          description: "Success create user"
+          content:
+            application/json:
+              schema:
+                type: "object"
+                properties:
+                  user_id:
+                    type: "string"
+                    example: "XXXXXXXXXXXXXX"
+  /measures:
+    post:
+      tags:
+        - "Measure API"
+      summary: "API to measure analysis"
+      parameters: []
+      requestBody:
+        description: "measure parameter"
+        content:
+          application/json:
+            schema:
+              type: "object"
+              properties:
+                token:
+                  type: "string"
+                  example: "XXXXXXXXXXXXXX"
+                session_id:
+                  type: "string"
+                  example: "XXXXXXXXXXXXXX"
+                user_id:
+                  type: "string"
+                  example: "XXXXXXXXXXXXXX"
+                path:
+                  type: "string"
+                  example: "XXX/YYY"
+                conversion:
+                  type: "integer"
+                  example: 1
+                event_time:
+                  type: "string"
+                  example: "2019-01-23 04:05:06 GMT+0900"
+      responses:
+        200:
+          description: "Success measure information"
